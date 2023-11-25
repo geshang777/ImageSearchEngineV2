@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+
+<title>Image Search Engine</title>
+</head>
+<!-- 引入bootstrap的样式表 -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<style>
+
+  .search-engine-title {
+    text-align: center;
+    font-size: 48px; /* Adjust size as needed */
+    color: #010a13; /* Bootstrap primary color */
+    margin-top: 50px; /* Space from top */
+    font-weight: bold;
+    font-family: 'Arial', sans-serif; /* Use a font that fits your brand */
+    margin: 40px;
+  }
+  .blue-text {
+        color: blue;
+    }
+  .search-container {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    text-align: center;
+    margin-bottom: 30px;
+  }
+  .results-container {
+    width: 100%; /* 使用100%宽度以适应所有图片 */
+  }
+  .upload-btn-wrapper {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+  }
+
+  .btn {
+    border: 2px solid gray;
+    color: gray;
+    background-color: white;
+    padding: 8px 20px;
+    border-radius: 8px;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    outline: none;
+  }
+
+  .upload-btn-wrapper input[type=file] {
+    font-size: 100px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+  }
+
+  .image-preview {
+    margin-top: 20px;
+  }
+
+  .results-container {
+    width: 80%;
+    max-width: 960px;
+    margin-top: 20px;
+  }
+  .search-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: 2px solid #007bff; /* Bootstrap primary color */
+    border-radius: 5px;
+    background-color: #fff;
+    color: #007bff;
+    cursor: pointer;
+    outline: none;
+    transition: background-color 0.3s, color 0.3s;
+    margin: 10px;
+  }
+
+  .search-button:hover {
+    background-color: #007bff;
+    color: #fff;
+  }
+
+  .search-button:active {
+    background-color: #0056b3; /* A darker shade of primary color */
+    border-color: #0056b3;
+  }
+
+  .search-button:focus {
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  }
+
+</style>
+
+</head>
+
+<body>
+<div class="search-container">
+    <h1 class="search-engine-title">Image Search Engine</h1>
+    <p> </p>
+    <form method="POST" enctype="multipart/form-data">
+        <div class="upload-btn-wrapper input[type=file]">
+            <button class="search-button">Upload a file
+            <input type="file" name="query_img" onchange="previewFile()">
+            </button>
+        </div>
+
+        <div class="image-preview" id="imagePreview">
+        <!-- Image preview will be shown here -->
+        </div>
+        <!-- 添加一个类名，使得提交按钮更加美观 -->
+        <div class="upload-btn-wrapper input[type=file]">
+            <input type="submit" class="search-button">
+        </div>
+        
+    </form>
+
+
+
+</div>
+
+
+<div class="container">
+    <h2>Result: <span style="color: #007bff;">{{ cls }}</span></h2>
+    {% if scores %}
+    <!-- 使用Bootstrap的row和col类来创建网格布局 -->
+    <div class="row">
+        {% for score in scores %}
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <figure>
+                <img src="{{ score[1] }}" class="img-responsive center-block" height="50px">
+                <figcaption class="text-center">{{ score[0] }}</figcaption>
+            </figure>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p class="text-center">No matched image.</p>
+    {% endif %}
+</div>
+
+<script>
+    function previewFile() {
+      const preview = document.getElementById('imagePreview');
+      const file    = document.querySelector('input[type=file]').files[0];
+      const reader  = new FileReader();
+  
+      reader.onloadend = function () {
+        preview.innerHTML = `<img src="${reader.result}" alt="Image preview" style="max-width: 500px; height: auto; border-radius: 8px;">`;
+      }
+  
+      if (file) {
+        reader.readAsDataURL(file);
+        displayResults(); // Simulate displaying results after image upload
+      } else {
+        preview.innerHTML = "";
+      }
+    }
+  
+    function displayResults() {
+      // This function is just a placeholder. You would typically make an API call here
+      // and dynamically generate the result items based on the response.
+      const resultsContainer = document.getElementById('resultsContainer');
+      resultsContainer.innerHTML = `
+        <div class="result-item">
+          <img class="result-image" src="https://via.placeholder.com/900x300" alt="Search Result">
+          <div class="result-info">
+            <h3 class="result-title">Result Title 1</h3>
+            <p class="result-description">This is a description of the first search result...</p>
+          </div>
+        </div>
+        <div class="result-item">
+          <img class="result-image" src="https://via.placeholder.com/900x300" alt="Search Result">
+          <div class="result-info">
+            <h3 class="result-title">Result Title 2</h3>
+            <p class="result-description">This is a description of the second search result...</p>
+          </div>
+        </div>
+      `;
+    }
+
+
+</script>
+</body>
+</html>
+
+
+
+
+
