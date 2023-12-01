@@ -128,8 +128,20 @@
     <h2>Result: <span style="color: #007bff;">{{ cls }}</span></h2>
     {% if scores %}
     <!-- 使用Bootstrap的row和col类来创建网格布局 -->
+    <h3>KDTree</h3>
     <div class="row">
-        {% for score in scores %}
+        {% for score in scores[0] %}
+        <div class="col-md-4 col-sm-6 col-xs-12">
+            <figure>
+                <img src="{{ score[1] }}" class="img-responsive center-block" height="50px">
+                <figcaption class="text-center">{{ score[0] }}</figcaption>
+            </figure>
+        </div>
+        {% endfor %}
+    </div>
+    <h3>Annoy</h3>
+    <div class="row">
+        {% for score in scores[1] %}
         <div class="col-md-4 col-sm-6 col-xs-12">
             <figure>
                 <img src="{{ score[1] }}" class="img-responsive center-block" height="50px">
