@@ -47,7 +47,7 @@ def index():
         # scores = [(dists[id], img_paths[id]) for id in ids]
         
         # annoy_scores 的结果
-        annoy_scores = get_scores(query,os.path.join("./static/imagenetkdt",cls + '_annoy.ann'),img_paths)
+        annoy_scores = get_scores(query,os.path.join("./static/imagenetkdt",ind2word[cls] + '_annoy.ann'),[os.path.join("/static/imagenet-mini/train",path)for path in img_paths])
 
         if scores[0][0]>70:
             scores.clear()

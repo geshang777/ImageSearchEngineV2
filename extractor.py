@@ -33,7 +33,7 @@ if __name__ == '__main__':
                 des = np.vstack(des)
                 kd_tree = cKDTree(des)
 
-                with open(os.path.join("./static/imagenetkdt",cls + '_kd_tree.pkl', 'wb')) as f:
+                with open(os.path.join("./static/imagenetkdt",cls + '_kd_tree.pkl'), 'wb') as f:
                     pickle.dump((kd_tree, inds), f)
                     print(f"{cls + '_kd_tree.pkl'} is done")
                     des = []
