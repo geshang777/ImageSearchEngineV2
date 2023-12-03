@@ -35,3 +35,4 @@ tzdata==2023.3
 ultralytics==8.0.216
 urllib3==2.1.0
 Werkzeug==3.0.1
+annoy==1.17.3
