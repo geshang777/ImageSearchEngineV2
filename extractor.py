@@ -6,6 +6,7 @@ import os
 import pickle
 from scipy.spatial import cKDTree
 
+from annoy_tools import store_annoy
 
 if __name__ == '__main__':
     fe = FeatureExtractor()
@@ -27,10 +28,12 @@ if __name__ == '__main__':
 
 
             if relative_image_path.split("/")[0]!=cls:
+                store_annoy(des,os.path.join("./static/imagenetkdt",cls + '_annoy.ann'))
+
                 des = np.vstack(des)
                 kd_tree = cKDTree(des)
 
-                with open(os.path.join("./static/imagenetkdt",cls + '_kd_tree.pkl', 'wb')) as f:
+                with open(os.path.join("./static/imagenetkdt",cls + '_kd_tree.pkl'), 'wb') as f:
                     pickle.dump((kd_tree, inds), f)
                     print(f"{cls + '_kd_tree.pkl'} is done")
                     des = []

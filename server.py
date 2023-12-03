@@ -9,6 +9,8 @@ from scipy.spatial import cKDTree
 import pickle
 from classification import yoloclas
 
+from annoy_tools import get_scores
+
 app = Flask(__name__)
 
 # Read image features
@@ -43,9 +45,15 @@ def index():
         # dists = np.linalg.norm(features-query, axis=1)  # L2 distances to features
         # ids = np.argsort(dists)[:20]  # Top 30 results
         # scores = [(dists[id], img_paths[id]) for id in ids]
+        
+        # annoy_scores 的结果
+        annoy_scores = get_scores(query,os.path.join("./static/imagenetkdt",ind2word[cls] + '_annoy.ann'),[os.path.join("/static/imagenet-mini/train",path)for path in img_paths])
+
         if scores[0][0]>70:
             scores.clear()
             cls=None
+        
+        scores = [scores, annoy_scores]
 
         return render_template('search.html',
                                query_path=uploaded_img_path,
